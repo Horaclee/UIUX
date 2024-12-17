@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -26,6 +28,17 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        playerInventory.ingredients.Clear();
+        if (playerInventory.ingredients.Count == 0)
+        {
+            playerInventory.ingredients = new List<Ingredients>(2);
+        }
+
+        while (playerInventory.ingredients.Count < 2)
+        {
+            playerInventory.ingredients.Add(null);
+        }
+
         playerCamera = GetComponentInChildren<Camera>();
 
         PlayerActionRef.action.performed += OnMove;

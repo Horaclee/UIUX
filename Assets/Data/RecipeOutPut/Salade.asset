@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc1f534ef31aa8848a349f35ddd170e6, type: 3}
   m_Name: Salade
   m_EditorClassIdentifier: 
-  Name: 
+  Name: Salade
   Sprite: {fileID: 0}

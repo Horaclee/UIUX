@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class RayCast : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class RayCast : MonoBehaviour
     [SerializeField] private Image RightHandImage;
 
     [SerializeField] private Player player;
+
+    private GameObject hitObject;
 
     private void Start()
     {
@@ -57,18 +60,27 @@ public class RayCast : MonoBehaviour
 
         if (Physics.Raycast(ray, out hitInfo, 10f, LayerMask.GetMask("Pickable", "Interactable")))
         {
-                GameObject hitObject = hitInfo.transform.gameObject;
+            hitObject = hitInfo.transform.gameObject;
+
+            if (hitObject.layer == LayerMask.NameToLayer("Pickable"))
+            {
                 targetCanvas = hitObject.GetComponentInChildren<Canvas>(true);
                 currentPickableItem = hitObject.GetComponent<PickableItem>();
-
                 ShowCanva();
-            if (hitInfo.transform.gameObject.layer == LayerMask.GetMask("Pickable"))
-            {
             }
-            if (hitInfo.transform.gameObject.layer == LayerMask.GetMask("Interactable"))
+            if (hitObject.layer == LayerMask.NameToLayer("Interactable"))
             {
-                
+                InteractableOject();
             }
+        }
+    }
+
+    private void InteractableOject()
+    {
+        Furniture furniture = hitObject.GetComponentInChildren<Furniture>();
+        if (furniture != null)
+        {
+            furniture.ShowInventory();
         }
     }
 
@@ -115,6 +127,6 @@ public class RayCast : MonoBehaviour
     }
     private void Update()
     {
-        
+
     }
 }
